@@ -8,9 +8,12 @@ This is a sample implementation of the visualization and algorithms described in
 
 # Citation
 
-If you use this code in either its current form or with your own changes, please cite our paper "Cluster-Flow Parallel Coordinates: Tracing Clusters Across Subspaces": [https://openreview.net/forum?id=oVHjlwLkl-](https://openreview.net/forum?id=oVHjlwLkl-).
+If you use this code in either its current form or with your own changes, please cite our paper "Cluster-Flow Parallel Coordinates: Tracing Clusters Across Subspaces":
+[https://doi.org/10.20380/GI2020.38](https://doi.org/10.20380/GI2020.38)
+[https://graphicsinterface.org/proceedings/gi2020/gi2020-38/](https://graphicsinterface.org/proceedings/gi2020/gi2020-38/)
+[https://openreview.net/forum?id=oVHjlwLkl-](https://openreview.net/forum?id=oVHjlwLkl-)
 
-If you are not able to find the citation info on the website, use the data from this BibTex entry:
+If you are not able to find the citation info on either website, use the data from this BibTex entry:
 ```tex
 @inproceedings{rodrigues2020cfpcp,
  author = {Rodrigues, Nils and Schulz, Christoph and Lhuillier, Antoine and Weiskopf, Daniel},
@@ -27,8 +30,11 @@ If you are not able to find the citation info on the website, use the data from 
 }
 ```
 
+# Paper presentation
+[https://www.youtube.com/watch?v=0MXzi1uYN4o](https://www.youtube.com/watch?v=0MXzi1uYN4o)
+
 # Paper Download
-To read the article, please download it directly from the publisher, [OpenReview](https://openreview.net/forum?id=oVHjlwLkl-), or from the authors' websites:
+To read the article, please download it from the links above or from the authors' websites:
 [Nils Rodrigues](https://www.visus.uni-stuttgart.de/en/institute/team/Rodrigues-00001/),
 [Christoph Schulz](https://www.visus.uni-stuttgart.de/en/institute/team/Schulz-00019/),
 [Antoine Lhuillier](https://www.visus.uni-stuttgart.de/en/institute/team/Lhuillier-00001/),
