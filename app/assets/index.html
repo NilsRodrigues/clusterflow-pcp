@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CF-CPC - Cluster-Flow Parallel Coordinates</title>
+  <!--<link href="css/vendor.css" rel="stylesheet" type="text/css">-->
+  <link href="css/app.css" rel="stylesheet" type="text/css">
+  <!-- for box size of 4 -->
+  <script id="fragmentshader_max4" type="x-shader/x-fragment">
+    const int sizeI = 4;
+    const float sizeF = 4.0;
+
+    uniform sampler2D inputDensityField;
+    uniform vec2 inputResolution;
+
+    void main() {
+      // input pixel size
+      vec2 minUV = 0.5 / inputResolution;
+      vec2 maxUV = (inputResolution - 0.5) / inputResolution;
+
+      // get the current box position
+      vec2 outputResolution = ceil(inputResolution / sizeF);
+      vec2 box = floor(gl_FragCoord.xy);
+      vec2 boxOrigin = (box * sizeF) + 0.5;
+
+      // get all colors from the box and select the largest one
+      vec4 maxDensity = vec4(-1.0);
+      for (int x = 0; x < sizeI; x++)
+      {
+        for (int y = 0; y < sizeI; y++)
+        {
+          vec2 inputCoords = vec2(boxOrigin.x + float(x), boxOrigin.y + float(y));
+		      inputCoords = inputCoords / inputResolution;
+          inputCoords = clamp(inputCoords, minUV, maxUV);
+          vec4 currentDensity = texture2D(inputDensityField, inputCoords);
+		  
+          maxDensity = max(maxDensity, currentDensity);
+        }
+      }
+      gl_FragColor = maxDensity;
+    }
+  </script>
+  <script id="vertexshader" type="x-shader/x-vertex">
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0 );
+    }
+  </script>
+  <script id="fragmentshader" type="x-shader/x-fragment">
+    varying vec2 vUv;
+    uniform sampler2D densityField;
+    uniform bool disableDensity;
+    uniform int densityMap;
+    uniform float maxDensity;
+    uniform float minAlpha, maxAlpha, alphaSlope, centerSourceAlpha;
+    uniform vec4 lineColor;
+    const float e = 2.7182818284;
+
+    void main() {
+      // alpha channel => density
+      float density = texture2D(densityField, vUv).r;
+
+      // some density => map to alpha
+      if (density > 0.0) {
+
+        // density rendering disabled => map directly to alpha with max at 1.0
+        if (disableDensity) {
+          gl_FragColor = vec4(lineColor.r, lineColor.g, lineColor.b, lineColor.a * density);
+        }
+        // density rendering enabled => map to alpha with limited growth function using external slope
+        else
+        {
+          // Linear
+          if (densityMap == 0) {
+            density = density/maxDensity;
+            density = minAlpha + (1.0-minAlpha) * density;
+          // Logarithmic
+          } else if (densityMap == 1) {
+            density = log(density+1.0) / log(maxDensity+1.0);
+            density = minAlpha + (1.0-minAlpha) * density;
+          // Linear Logistic
+          } else if (densityMap == 2) {
+            density = density/maxDensity;
+            density =  minAlpha + (maxAlpha - minAlpha) / (1.0 + pow(e, - alphaSlope * (density - centerSourceAlpha)));
+          // Logarithmic Logistic
+          } else if (densityMap == 3) {
+            density = log(density+1.0) / log(maxDensity+1.0);
+            density =  minAlpha + (maxAlpha - minAlpha) / (1.0 + pow(e, - alphaSlope * (density - centerSourceAlpha)));
+          }
+
+          gl_FragColor = vec4(lineColor.r, lineColor.g, lineColor.b, lineColor.a * density);
+        }
+      }
+      // no density at all => transparent
+      else
+      {
+        gl_FragColor = vec4(0);
+      }
+    }
+  </script>
+  <script src="js/vendor.js" type="text/javascript"></script>
+  <script src="js/app.js" type="text/javascript" onload="require('index');"></script>
+</head>
+<body>
+  <div id="visualization"></div>
+  <div class="legend">Fuzzyness value: 0<span id="legend"></span>1</div>
+  <div>
+    <div class="gui" id="gui_actions"></div>
+    <div class="gui" id="gui_clusterParams"></div>
+    <div class="gui" id="gui_generalLayout"></div>
+    <div class="gui" id="gui_axisStuff"></div>
+    <div class="gui" id="gui_lineLayout"></div>
+    <div class="gui" id="gui_lineRendering"></div>
+  </div>
+  <div>
+    <ul id="debug-output" style="list-style-type:none"></ul>
+  </div>
+</body>
+</html>

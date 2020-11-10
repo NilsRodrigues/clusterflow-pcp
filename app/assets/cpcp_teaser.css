@@ -1,0 +1,85 @@
+﻿/* background */
+#visualization {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #000;
+}
+
+
+
+
+/* axis labels */
+.axis text {
+    font-weight: 100;
+    fill: #000;
+    stroke: #fff;
+    stroke-opacity: 0.5;
+    stroke-width: 2;
+    paint-order: stroke;
+    white-space: pre;
+}
+.axis text tspan {
+    white-space: pre;
+}
+
+/* axes */
+.cluster line {
+    shape-rendering: crispEdges;
+}
+
+line.axis,
+.tick line {
+    stroke: #000;
+    stroke-width: 1;
+}
+
+.cluster line.axis,
+.cluster .tick line {
+    stroke: #04A;
+}
+
+.noise line.axis,
+.noise .tick line {
+    stroke: #A00;
+}
+
+/* axis ticks */
+.tick line {
+    stroke-width: 20;
+}
+
+.tick text {
+    transform: matrix(1, 0, 0, 1, -14, 0);
+}
+
+
+
+
+/* data rows */
+.datarow {
+    stroke-width: 1;
+    fill: none;
+}
+
+line.datarow:not([stroke]),
+path.datarow:not([stroke]) {
+    stroke: #000;
+}
+
+line.datarow,
+path.datarow {
+    opacity: 0.2;
+}
+
+
+/* connectors */
+polygon.connector {
+    fill: #EEE;
+}
+
+polygon.connector {
+    stroke: #000;
+    fill: #000;
+    fill-opacity: 0.4;
+    opacity: 0.1;
+}
