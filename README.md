@@ -13,11 +13,17 @@ If you use this code in either its current form or with your own changes, please
 If you are not able to find the citation info on the website, use the data from this BibTex entry:
 ```tex
 @inproceedings{rodrigues2020cfpcp,
-author = {Rodrigues, Nils and Schulz, Christoph and Lhuillier, Antoine and Weiskopf, Daniel},
-title = {Cluster-Flow Parallel Coordinates: Tracing Clusters Across Subspaces},
-year = {2020},
-publisher = {Canadian Human-Computer Communications Society},
-series = {GI’20}
+ author = {Rodrigues, Nils and Schulz, Christoph and Lhuillier, Antoine and Weiskopf, Daniel},
+ title = {Cluster-Flow Parallel Coordinates: Tracing Clusters Across Subspaces},
+ booktitle = {Proceedings of Graphics Interface 2020},
+ series = {GI 2020},
+ year = {2020},
+ isbn = {978-0-9947868-5-2},
+ location = {University of Toronto},
+ pages = {382 -- 392},
+ numpages = {11},
+ doi = {10.20380/GI2020.38},
+ publisher = {Canadian Human-Computer Communications Society / Société canadienne du dialogue humain-machine},
 }
 ```
 
